@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#2f6f73">
+    <meta name="description" content="PWA de estudos para IBGE ACA Patos">
+    <title>IBGE ACA Patos</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Processo Seletivo IBGE 01/2026</p>
+        <h1>IBGE ACA Patos</h1>
+      </div>
+      <button class="install-button" id="installButton" hidden>Instalar</button>
+    </header>
+
+    <main class="app-shell">
+      <section class="view active" id="dashboard" aria-labelledby="dashboard-title">
+        <div class="hero-panel">
+          <div>
+            <p class="eyebrow">Prova prevista</p>
+            <h2 id="dashboard-title">27/09/2026</h2>
+            <p class="muted">Meta mínima: 18 pontos no total e pelo menos 1 ponto em cada disciplina.</p>
+          </div>
+          <div class="countdown" aria-live="polite">
+            <span id="daysLeft">--</span>
+            <small>dias</small>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <h2>Progresso</h2>
+          <button class="primary-button" data-action="studyToday">Estudar hoje</button>
+        </div>
+        <div class="progress-grid" id="progressCards"></div>
+
+        <div class="section-heading">
+          <h2>Checklist da prova</h2>
+          <span class="pill" id="examChecklistSummary">0/7</span>
+        </div>
+        <div class="checklist" id="examChecklist"></div>
+      </section>
+
+      <section class="view" id="edital" aria-labelledby="edital-title">
+        <div class="section-heading">
+          <h2 id="edital-title">Edital filtrado</h2>
+          <span class="pill">ACA</span>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Cargo</h3>
+            <p>Agente Censitário Administrativo atua no apoio operacional e administrativo das atividades censitárias, com organização documental, atendimento e rotinas de suporte.</p>
+          </article>
+          <article class="info-card">
+            <h3>Remuneração</h3>
+            <p><strong>Salário:</strong> R$ 2.128,00</p>
+            <p><strong>Auxílio alimentação:</strong> R$ 1.192,00</p>
+            <p><strong>Carga horária:</strong> 40h semanais</p>
+          </article>
+          <article class="info-card">
+            <h3>Prova objetiva</h3>
+            <p>60 questões, cada uma valendo 1 ponto.</p>
+            <ul class="clean-list">
+              <li>15 de Língua Portuguesa</li>
+              <li>10 de Raciocínio Lógico Quantitativo</li>
+              <li>35 de Noções de Administração</li>
+            </ul>
+          </article>
+          <article class="info-card">
+            <h3>Aprovação e desempate</h3>
+            <p>É preciso alcançar pelo menos 18 pontos no total e fazer ao menos 1 ponto em cada disciplina.</p>
+            <p>Desempate: Noções de Administração, depois Língua Portuguesa.</p>
+          </article>
+        </div>
+        <div class="timeline">
+          <div><strong>21/09/2026</strong><span>Cartão de convocação</span></div>
+          <div><strong>27/09/2026</strong><span>Prova objetiva</span></div>
+          <div><strong>28/09/2026</strong><span>Gabarito preliminar</span></div>
+        </div>
+      </section>
+
+      <section class="view" id="plano" aria-labelledby="plano-title">
+        <div class="section-heading">
+          <h2 id="plano-title">Plano de estudos</h2>
+          <span class="pill">Até 27/09/2026</span>
+        </div>
+        <div class="study-split">
+          <div><span>Administração</span><strong>60%</strong><meter min="0" max="100" value="60"></meter></div>
+          <div><span>Português</span><strong>25%</strong><meter min="0" max="100" value="25"></meter></div>
+          <div><span>Raciocínio Lógico</span><strong>15%</strong><meter min="0" max="100" value="15"></meter></div>
+        </div>
+        <div class="routine-grid">
+          <article class="info-card">
+            <h3>Rotina diária</h3>
+            <p>Bloco 1: 25 min de teoria. Bloco 2: 20 min de questões. Bloco 3: 10 min de resumo ou flashcards. Feche com 5 min anotando erros.</p>
+          </article>
+          <article class="info-card">
+            <h3>Revisões</h3>
+            <p>Revise cada tema depois de 24h, 7 dias e 15 dias. Use os erros das questões para decidir o que volta ao ciclo.</p>
+          </article>
+        </div>
+        <div class="section-heading">
+          <h2>Tarefas</h2>
+          <span class="pill" id="studyTasksSummary">0/0</span>
+        </div>
+        <div class="checklist" id="studyTasks"></div>
+      </section>
+
+      <section class="view" id="aulas" aria-labelledby="aulas-title">
+        <div class="section-heading">
+          <h2 id="aulas-title">Aulas</h2>
+          <select id="lessonFilter" aria-label="Filtrar aulas por disciplina"></select>
+        </div>
+        <div class="lesson-list" id="lessonList"></div>
+      </section>
+
+      <section class="view" id="questoes" aria-labelledby="questoes-title">
+        <div class="section-heading">
+          <h2 id="questoes-title">Questões</h2>
+          <span class="pill" id="questionStats">0 acertos</span>
+        </div>
+        <div class="filters">
+          <select id="questionDiscipline" aria-label="Filtrar questões por disciplina"></select>
+          <select id="questionTopic" aria-label="Filtrar questões por assunto"></select>
+        </div>
+        <div class="question-list" id="questionList"></div>
+      </section>
+
+      <section class="view" id="simulado" aria-labelledby="simulado-title">
+        <div class="section-heading">
+          <h2 id="simulado-title">Simulado</h2>
+          <span class="timer" id="timer">00:00:00</span>
+        </div>
+        <div class="sim-actions">
+          <button class="primary-button" id="startSim">Gerar simulado</button>
+          <button class="ghost-button" id="finishSim" disabled>Finalizar</button>
+        </div>
+        <div id="simSummary" class="sim-summary"></div>
+        <div class="question-list" id="simQuestionList"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navegação principal">
+      <button class="active" data-view="dashboard">Início</button>
+      <button data-view="edital">Edital</button>
+      <button data-view="plano">Plano</button>
+      <button data-view="aulas">Aulas</button>
+      <button data-view="questoes">Questões</button>
+      <button data-view="simulado">Simulado</button>
+    </nav>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
