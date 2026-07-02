@@ -28,6 +28,21 @@ const studyTasks = [
   "Atualizar resumo de pontos fracos"
 ];
 
+const strategyCards = [
+  {
+    title: "Pontuação inteligente",
+    text: "Administração representa a maior parte da prova e também é o primeiro critério de desempate. A meta prática é buscar 30+ acertos nela, sem abandonar Português."
+  },
+  {
+    title: "Perfil de cobrança",
+    text: "Treine questões de comando direto, conceitos aplicados à rotina administrativa, interpretação literal cuidadosa e alternativas com palavras absolutas, como sempre, nunca e apenas."
+  },
+  {
+    title: "Rotina para ranking",
+    text: "Estude teoria curta, faça questões no mesmo dia, registre erro por assunto e revise em 24h, 7 dias e 15 dias. A aprovação vem da repetição corrigida."
+  }
+];
+
 const lessons = [
   {
     discipline: "Língua Portuguesa",
@@ -150,6 +165,99 @@ const lessons = [
   }
 ];
 
+const deepDives = {
+  "Compreensão e interpretação de texto": {
+    focus: "A cobrança costuma exigir leitura precisa: ideia central, informação explícita, inferência moderada, reescrita compatível e relação lógica no próprio texto. O erro comum é responder pelo que parece verdadeiro fora do texto.",
+    traps: "Desconfie de alternativas que ampliam o sentido, restringem demais, trocam causa por consequência ou usam palavras absolutas. Em texto administrativo, a resposta correta tende a ser objetiva e fiel.",
+    training: "Faça três passadas: comando, texto e alternativas. Elimine cada alternativa dizendo o motivo: extrapolação, contradição, redução indevida ou informação ausente."
+  },
+  "Sinônimos, antônimos, homônimos e parônimos": {
+    focus: "O foco é vocabulário em contexto. Não basta decorar pares; é preciso perceber o sentido exato exigido pela frase.",
+    traps: "Ratificar/retificar, iminente/eminente, discrição/descrição, deferir/diferir, mandado/mandato e seção/sessão/cessão são pares muito rentáveis.",
+    training: "Monte uma lista de parônimos e escreva uma frase administrativa para cada palavra. Isso fixa uso, não só definição."
+  },
+  "Pontuação": {
+    focus: "Priorize vírgula: termos deslocados, aposto, vocativo, enumeração, orações explicativas e conectivos deslocados. A regra mais lucrativa é não separar sujeito de verbo nem verbo de complemento direto.",
+    traps: "Alternativas erradas costumam inserir vírgula entre sujeito e predicado ou remover vírgula de expressão deslocada no início da frase.",
+    training: "Antes de marcar, encontre sujeito, verbo e complemento. Só depois avalie os termos acessórios."
+  },
+  "Estrutura e sequência lógica": {
+    focus: "Questões desse tipo pedem progressão textual: apresentação, desenvolvimento, consequência e fechamento. Conectivos indicam o caminho.",
+    traps: "Fique atento a frases que começam pela conclusão antes de apresentar a causa, ou que quebram a referência de pronomes como esse, isso, tal e referido.",
+    training: "Reordene pequenos comunicados administrativos e justifique por conectivos: primeiro, depois, portanto, entretanto, por fim."
+  },
+  "Ortografia oficial e acentuação": {
+    focus: "Estude regras por grupos: oxítonas, paroxítonas, proparoxítonas, hiatos e ditongos. Em ortografia, priorize palavras de uso administrativo.",
+    traps: "A banca explora palavras como exceção, concessão, excesso, análise, usuário, público, relatório e assembleia.",
+    training: "Crie cartões com palavra, regra e frase. Errou uma palavra, ela volta para revisão em 24h."
+  },
+  "Classes de palavras, pronomes e verbos": {
+    focus: "A cobrança costuma misturar classe gramatical e função no texto. O mesmo termo pode mudar de classe conforme o uso.",
+    traps: "Pronomes relativos exigem antecedente claro. Verbos anômalos, tempos compostos e correlação verbal derrubam quem só decorou nomes.",
+    training: "Em cada frase, marque verbo, sujeito, pronomes e referentes. Depois explique por que a palavra exerce aquela função."
+  },
+  "Concordância, regência, vozes e sintaxe": {
+    focus: "É o bloco gramatical mais decisivo. Domine sujeito simples e composto, verbo haver impessoal, verbo fazer indicando tempo, concordância com porcentagem, regência com preposição e transformação de voz ativa/passiva.",
+    traps: "Houveram problemas, fazem dias, obedeceu o procedimento e assistiu o relatório são estruturas tentadoras e geralmente erradas no padrão formal.",
+    training: "Resolva em ordem: ache o verbo, ache o sujeito, veja se o verbo é impessoal, confira preposição exigida e só então avalie concordância."
+  },
+  "Coesão, coerência e redação oficial operacional": {
+    focus: "Para ACA, redação operacional importa porque o cargo lida com registros, comunicados, documentos e atendimento. Clareza, impessoalidade, objetividade e rastreabilidade são centrais.",
+    traps: "Textos vagos, subjetivos, coloquiais ou sem data/responsável são inadequados. A banca pode pedir a versão mais clara, formal e precisa.",
+    training: "Transforme frases vagas em registros objetivos: fato, data, local, providência e responsável."
+  },
+  "Aspectos gerais e sistemas abertos": {
+    focus: "Administração é o núcleo da prova. Entenda organização como sistema: entradas, transformação, saídas, feedback e ambiente. O IBGE opera com metas, recursos, pessoas, documentos e atendimento.",
+    traps: "Não trate organização como sistema fechado. Afirmações de isolamento total do ambiente tendem a ser falsas.",
+    training: "Para cada conceito, crie exemplo em posto de coleta, agência, arquivo, escala, atendimento ou suporte censitário."
+  },
+  "Planejamento, organização, direção, coordenação e controle": {
+    focus: "Saiba diferenciar as funções em casos práticos. Planejamento define objetivos; organização estrutura recursos; direção lidera; coordenação integra; controle mede e corrige.",
+    traps: "A banca troca controle por planejamento e organização por direção. Procure o verbo da situação: definir, distribuir, orientar, integrar, comparar.",
+    training: "Faça uma tabela com verbos típicos de cada função e resolva casos curtos até reconhecer o padrão sem hesitar."
+  },
+  "Motivação, comunicação e liderança": {
+    focus: "Estude feedback, ruído, canais, liderança autocrática/democrática/liberal, motivação intrínseca/extrínseca e necessidades humanas no trabalho.",
+    traps: "Liderança não é igual a cargo formal. Liderança é influência; autoridade é direito formal; poder é capacidade de influenciar.",
+    training: "Classifique situações de equipe: problema é comunicação, motivação, liderança, conflito ou falta de coordenação?"
+  },
+  "Grupos, indivíduo e trabalho em equipe": {
+    focus: "Grupo é reunião de pessoas; equipe tem objetivo comum, papéis, cooperação e interdependência. Em atendimento, equipe eficiente reduz erro e retrabalho.",
+    traps: "Competição permanente, ausência de papéis e comunicação improvisada não são características de equipe eficiente.",
+    training: "Liste sinais de equipe boa e equipe ruim em rotina administrativa. Use isso para eliminar alternativas."
+  },
+  "Responsabilidade, coordenação, autoridade, poder e delegação": {
+    focus: "Delegação exige tarefa clara, autoridade compatível, prazo, padrão esperado e acompanhamento. Responsabilidade final não desaparece.",
+    traps: "Delegar não é abandonar. Autoridade não é igual a poder informal. Responsabilidade sem autoridade suficiente gera falha de execução.",
+    training: "Em cada caso, pergunte: quem decide, quem executa, quem responde, qual limite e qual controle?"
+  },
+  "Responsabilidade, autoridade, poder e delegação": {
+    focus: "Delegação exige tarefa clara, autoridade compatível, prazo, padrão esperado e acompanhamento. Responsabilidade final não desaparece.",
+    traps: "Delegar não é abandonar. Autoridade não é igual a poder informal. Responsabilidade sem autoridade suficiente gera falha de execução.",
+    training: "Em cada caso, pergunte: quem decide, quem executa, quem responde, qual limite e qual controle?"
+  },
+  "Qualidade, atendimento, documentação e arquivo": {
+    focus: "Este bloco é muito aderente ao cargo ACA. Domine urbanidade, clareza, registro, protocolo, classificação, temporalidade documental e tipos de arquivo: corrente, intermediário e permanente.",
+    traps: "Atendimento rápido mas impreciso não é qualidade. Arquivo sem critério não é organização. Protocolo não é mero carimbo; é rastreabilidade.",
+    training: "Simule fluxos: receber documento, conferir, protocolar, encaminhar, arquivar e recuperar informação."
+  },
+  "Estruturas lógicas e argumentação": {
+    focus: "Treine proposições, conectivos, negação e validade. A cobrança tende a explorar equivalências simples e negação de todo, algum, nenhum e condicional.",
+    traps: "A negação de todos não é nenhum; é algum não. A negação de se P então Q é P e não Q.",
+    training: "Traduza frases para símbolos simples e monte pequenas tabelas-verdade quando houver dúvida."
+  },
+  "Diagramas lógicos": {
+    focus: "Conjuntos resolvem questões com todo, algum, nenhum, pelo menos um e nem todo. Desenhar evita erro verbal.",
+    traps: "Algum A é B não significa todo A é B. Nem todo A é B significa que pelo menos um A não é B.",
+    training: "Desenhe círculos antes de olhar alternativas. Depois teste cada conclusão no desenho."
+  },
+  "Aritmética, álgebra e geometria básicas": {
+    focus: "Priorize porcentagem, razão, proporção, regra de três, equações simples, perímetro, área e leitura de dados. A conta costuma ser simples; o desafio é montar corretamente.",
+    traps: "Cuidado com percentual de percentual, inversão de razão, unidade de medida e área versus perímetro.",
+    training: "Faça 10 contas curtas por dia, sempre escrevendo a unidade final. Velocidade vem de repetição."
+  }
+};
+
 const questions = [
   q("portugues", "Interpretação de texto", "Em um comunicado, lê-se: 'O atendimento presencial será suspenso na sexta-feira para atualização dos sistemas internos'. A informação principal é que:", ["o atendimento remoto será ampliado.", "a suspensão ocorrerá por atualização dos sistemas.", "os sistemas externos serão substituídos.", "a sexta-feira será ponto facultativo.", "o atendimento presencial acabou definitivamente."], 1, "O texto informa uma suspensão pontual e apresenta a causa: atualização dos sistemas internos."),
   q("portugues", "Parônimos", "Assinale a alternativa em que a palavra completa corretamente a frase: 'É necessário _____ os dados antes de enviar o relatório.'", ["ratificar", "retificar", "emergir", "imergir", "deferir"], 1, "Retificar significa corrigir. Ratificar significa confirmar."),
@@ -232,7 +340,14 @@ function q(discipline, topic, text, alternatives, answer, explanation) {
 
 function loadState() {
   const saved = localStorage.getItem(storageKey);
-  return saved ? JSON.parse(saved) : { checks: {}, tasks: {}, performance: {}, simAnswers: {} };
+  const base = saved ? JSON.parse(saved) : {};
+  return {
+    checks: base.checks || {},
+    tasks: base.tasks || {},
+    performance: base.performance || {},
+    simAnswers: base.simAnswers || {},
+    optionOrders: base.optionOrders || {}
+  };
 }
 
 function saveState() {
@@ -258,6 +373,17 @@ function renderProgress() {
       </article>
     `;
   }).join("");
+}
+
+function renderStrategy() {
+  const container = document.querySelector("#strategyCards");
+  if (!container) return;
+  container.innerHTML = strategyCards.map((card) => `
+    <article class="strategy-card">
+      <h3>${card.title}</h3>
+      <p class="muted">${card.text}</p>
+    </article>
+  `).join("");
 }
 
 function renderChecklist(id, items, bucket, summaryId) {
@@ -290,6 +416,7 @@ function updateLessons() {
       </div>
       <h3>${lesson.topic}</h3>
       <p>${lesson.explanation}</p>
+      ${deepDiveTemplate(lesson.topic)}
       <details>
         <summary>Exemplo e resumo</summary>
         <p><strong>Exemplo:</strong> ${lesson.example}</p>
@@ -297,6 +424,18 @@ function updateLessons() {
       </details>
     </article>
   `).join("");
+}
+
+function deepDiveTemplate(topic) {
+  const deep = deepDives[topic];
+  if (!deep) return "";
+  return `
+    <div class="lesson-deep">
+      <div><strong>Como costuma cair</strong>${deep.focus}</div>
+      <div><strong>Armadilhas</strong>${deep.traps}</div>
+      <div><strong>Treino de alto rendimento</strong>${deep.training}</div>
+    </div>
+  `;
 }
 
 function renderQuestionFilters() {
@@ -333,6 +472,8 @@ function renderQuestions() {
 function questionTemplate(item, mode) {
   const perf = state.performance[item.id];
   const status = perf ? (perf === "correct" ? "Acertei" : "Errei") : "Sem marcação";
+  const order = optionOrderFor(item, mode);
+  const answerLetter = String.fromCharCode(65 + order.indexOf(item.answer));
   return `
     <article class="question-card" data-question="${item.id}">
       <div class="lesson-meta">
@@ -341,10 +482,10 @@ function questionTemplate(item, mode) {
       </div>
       <h3>${item.text}</h3>
       <div class="alternatives">
-        ${item.alternatives.map((alternative, index) => `
+        ${order.map((originalIndex, index) => `
           <label class="alternative">
-            <input type="radio" name="${mode}-${item.id}" value="${index}">
-            <span>${String.fromCharCode(65 + index)}) ${alternative}</span>
+            <input type="radio" name="${mode}-${item.id}" value="${originalIndex}">
+            <span>${String.fromCharCode(65 + index)}) ${item.alternatives[originalIndex]}</span>
           </label>
         `).join("")}
       </div>
@@ -355,11 +496,29 @@ function questionTemplate(item, mode) {
         <span class="pill">${status}</span>
       </div>
       <div class="feedback" id="feedback-${mode}-${item.id}">
-        <strong>Gabarito: ${String.fromCharCode(65 + item.answer)}</strong>
+        <strong>Gabarito: ${answerLetter}</strong>
         <p>${item.explanation}</p>
       </div>
     </article>
   `;
+}
+
+function optionOrderFor(item, mode) {
+  const key = `${mode}:${item.id}`;
+  if (!state.optionOrders[key]) {
+    state.optionOrders[key] = shuffledIndexes(item.alternatives.length);
+    saveState();
+  }
+  return state.optionOrders[key];
+}
+
+function shuffledIndexes(length) {
+  const indexes = Array.from({ length }, (_, index) => index);
+  for (let index = indexes.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [indexes[index], indexes[swapIndex]] = [indexes[swapIndex], indexes[index]];
+  }
+  return indexes;
 }
 
 function renderQuestionStats() {
@@ -434,6 +593,9 @@ function wireNavigation() {
 
 function startSim() {
   state.simAnswers = {};
+  Object.keys(state.optionOrders).forEach((key) => {
+    if (key.startsWith("sim:")) delete state.optionOrders[key];
+  });
   saveState();
   simQuestions = [
     ...pickQuestions("portugues", 15),
@@ -511,6 +673,7 @@ function registerServiceWorker() {
 function init() {
   renderCountdown();
   renderProgress();
+  renderStrategy();
   renderChecklist("#examChecklist", examChecklistItems, "checks", "#examChecklistSummary");
   renderChecklist("#studyTasks", studyTasks, "tasks", "#studyTasksSummary");
   renderLessons();

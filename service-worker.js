@@ -1,4 +1,4 @@
-const cacheName = "ibge-aca-patos-v1";
+const cacheName = "ibge-aca-patos-v2";
 const assets = [
   "./",
   "index.html",

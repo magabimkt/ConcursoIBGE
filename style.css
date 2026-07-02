@@ -189,6 +189,7 @@ button {
 }
 
 .progress-grid,
+.strategy-grid,
 .info-grid,
 .routine-grid {
   display: grid;
@@ -201,6 +202,7 @@ button {
 }
 
 .progress-card,
+.strategy-card,
 .info-card,
 .lesson-card,
 .question-card,
@@ -212,11 +214,13 @@ button {
 }
 
 .progress-card,
+.strategy-card,
 .info-card {
   padding: 18px;
 }
 
 .progress-card h3,
+.strategy-card h3,
 .info-card h3,
 .lesson-card h3,
 .question-card h3 {
@@ -344,6 +348,25 @@ select {
   margin-top: 12px;
 }
 
+.lesson-deep {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.lesson-deep div {
+  padding: 12px;
+  background: #f8faf8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.lesson-deep strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--brand-dark);
+}
+
 .lesson-card summary {
   color: var(--brand);
   font-weight: 800;
@@ -459,6 +482,10 @@ select {
   }
 
   .progress-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .strategy-grid {
     grid-template-columns: 1fr;
   }
 
