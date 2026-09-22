@@ -1,0 +1,67 @@
+## Introdução
+
+Diagramas lógicos transformam frases com **todo, algum e nenhum** em desenhos de conjuntos (círculos). Desenhar resolve quase todas as questões desse tipo, sem decorar regras.
+
+## Os três desenhos básicos
+
+**"Todo A é B":** o círculo A fica **inteiro dentro** do círculo B. Todo agente é servidor: todos os agentes estão dentro do grupo dos servidores. Mas nem todo servidor é agente.
+
+**"Nenhum A é B":** os círculos ficam **separados**, sem nenhuma parte em comum.
+
+**"Algum A é B":** os círculos se **cruzam**, com pelo menos um elemento na parte comum (interseção).
+
+<Atencao>
+"Algum A é B" **não** diz nada sobre o resto. Pode até ser que todo A seja B. Na lógica, "algum" significa apenas "pelo menos um".
+</Atencao>
+
+## Como tirar conclusões
+
+1. Desenhe primeiro a frase com **"todo"** ou **"nenhum"** (são as mais restritivas).
+2. Depois encaixe a frase com **"algum"**.
+3. Uma conclusão só é válida se for verdadeira em **todos os desenhos possíveis**.
+
+<Pegadinha>
+Se "Todo agente é servidor" e "Algum servidor é estudante", **não** dá para concluir que algum agente é estudante. Os estudantes podem estar só na parte dos servidores que não são agentes.
+</Pegadinha>
+
+## Negações (revisão)
+
+- Negar "Todo A é B" → "**Algum A não é B**".
+- Negar "Nenhum A é B" → "**Algum A é B**".
+- Negar "Algum A é B" → "**Nenhum A é B**".
+
+## Problemas de contagem com conjuntos
+
+Quando uma pesquisa pergunta sobre duas características, parte das pessoas tem as duas. A fórmula é:
+
+**Total de A ou B = A + B − (A e B)**
+
+Subtrai-se a interseção porque ela foi contada duas vezes.
+
+<ExemploIBGE>
+Em um setor, 40 domicílios têm internet, 25 têm computador e 15 têm os dois. Quantos têm internet **ou** computador? 40 + 25 − 15 = **50**. E quantos têm **só** internet? 40 − 15 = **25**.
+</ExemploIBGE>
+
+**Dica de método:** comece preenchendo a **interseção** no desenho e depois complete as partes "só A" e "só B". Se a questão der o total geral, quem está **fora** dos dois círculos é: total − (A ou B).
+
+<ErroComum>
+Somar A + B direto, esquecendo de tirar quem está nos dois grupos.
+</ErroComum>
+
+## Resumo
+
+- Todo A é B: A dentro de B.
+- Nenhum A é B: círculos separados.
+- Algum A é B: círculos se cruzam.
+- Conclusão válida = verdadeira em todos os desenhos possíveis.
+- A ou B = A + B − (A e B).
+
+## Checklist de revisão
+
+- ☐ Sei desenhar todo, algum e nenhum.
+- ☐ Sei testar se uma conclusão é obrigatória.
+- ☐ Sei resolver contagem com interseção.
+
+## Referências
+
+- ALENCAR FILHO, Edgard de. *Iniciação à Lógica Matemática*.

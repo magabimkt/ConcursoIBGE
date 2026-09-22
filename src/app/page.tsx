@@ -5,7 +5,7 @@ import { allQuestions } from "@/data/questions";
 import { getAllLessons } from "@/config/edital";
 
 /** Atualize a data a cada nova entrega, para conferir se a versão nova está no ar. */
-const APP_VERSION = "22/09/2026";
+const APP_VERSION = "22/09/2026 · rev. 3";
 
 const QUICK_LINKS = [
   { href: "/disciplinas", title: "Aulas", description: "Leia a teoria por disciplina e módulo." },
