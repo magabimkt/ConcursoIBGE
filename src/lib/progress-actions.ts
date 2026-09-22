@@ -1,6 +1,7 @@
 import type { FlashcardReviewState, QuestionAttempt, UserProgress } from "@/types";
 import { getItem, setItem, storageKeys } from "@/lib/storage";
 import { emptyProgress } from "@/lib/stats";
+import { getAllLessons } from "@/config/edital";
 
 function readProgress(): UserProgress {
   return getItem<UserProgress>(storageKeys.progress, emptyProgress);
@@ -10,17 +11,64 @@ function writeProgress(progress: UserProgress): void {
   setItem(storageKeys.progress, progress);
 }
 
+function localDateKey(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+/**
+ * Registra atividade de estudo: atualiza a sequência de dias (streak) e
+ * soma minutos estimados ao histórico de estudo.
+ * Estimativas: questão = 2 min, flashcard = 0,5 min, aula = tempo estimado da aula.
+ */
+function registerActivity(progress: UserProgress, minutes: number): UserProgress {
+  const now = new Date();
+  const today = localDateKey(now);
+  const yesterdayDate = new Date(now);
+  yesterdayDate.setDate(now.getDate() - 1);
+  const yesterday = localDateKey(yesterdayDate);
+
+  let streakDays = progress.streakDays;
+  if (progress.lastStudyDate === today) {
+    streakDays = Math.max(1, streakDays);
+  } else if (progress.lastStudyDate === yesterday) {
+    streakDays = streakDays + 1;
+  } else {
+    streakDays = 1;
+  }
+
+  return {
+    ...progress,
+    streakDays,
+    lastStudyDate: today,
+    studySessions: [
+      ...progress.studySessions,
+      {
+        id: `${now.getTime()}`,
+        startedAt: now.toISOString(),
+        endedAt: now.toISOString(),
+        minutesStudied: minutes,
+      },
+    ],
+  };
+}
+
 export function recordQuestionAttempt(
   attempt: Omit<QuestionAttempt, "answeredAt">
 ): UserProgress {
   const progress = readProgress();
-  const updated: UserProgress = {
-    ...progress,
-    questionAttempts: [
-      ...progress.questionAttempts,
-      { ...attempt, answeredAt: new Date().toISOString() },
-    ],
-  };
+  const updated: UserProgress = registerActivity(
+    {
+      ...progress,
+      questionAttempts: [
+        ...progress.questionAttempts,
+        { ...attempt, answeredAt: new Date().toISOString() },
+      ],
+    },
+    2
+  );
   writeProgress(updated);
   return updated;
 }
@@ -29,8 +77,10 @@ export function toggleLessonComplete(lessonSlug: string): UserProgress {
   const progress = readProgress();
   const existing = progress.lessons[lessonSlug];
   const nowCompleted = !existing?.completed;
+  const lessonMinutes =
+    getAllLessons().find((l) => l.slug === lessonSlug)?.estimatedMinutes ?? 0;
 
-  const updated: UserProgress = {
+  const withLesson: UserProgress = {
     ...progress,
     lessons: {
       ...progress.lessons,
@@ -42,6 +92,7 @@ export function toggleLessonComplete(lessonSlug: string): UserProgress {
       },
     },
   };
+  const updated = nowCompleted ? registerActivity(withLesson, lessonMinutes) : withLesson;
   writeProgress(updated);
   return updated;
 }
@@ -106,5 +157,6 @@ export function recordFlashcardReview(
   };
 
   setItem(storageKeys.flashcardReviews, updated);
+  writeProgress(registerActivity(readProgress(), 0.5));
   return updated;
 }

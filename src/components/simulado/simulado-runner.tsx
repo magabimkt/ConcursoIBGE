@@ -22,6 +22,9 @@ export function SimuladoRunner({
 }) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | null>>({});
+  // Cópia sempre atualizada das respostas, para o cronômetro não usar um valor antigo.
+  const answersRef = useRef<Record<string, string | null>>({});
+  answersRef.current = answers;
   const [secondsLeft, setSecondsLeft] = useState(timeLimitMinutes * 60);
   const startedAt = useRef(Date.now());
   const finished = useRef(false);
@@ -32,7 +35,7 @@ export function SimuladoRunner({
     const timeSpentSeconds = Math.round((Date.now() - startedAt.current) / 1000);
     const finalAnswers: SimuladoAnswer[] = questions.map((q) => ({
       questionId: q.id,
-      selectedAlternativeId: answers[q.id] ?? null,
+      selectedAlternativeId: answersRef.current[q.id] ?? null,
     }));
     onFinish(finalAnswers, timeSpentSeconds);
   }

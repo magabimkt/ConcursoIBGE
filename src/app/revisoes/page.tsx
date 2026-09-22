@@ -12,6 +12,7 @@ const WEEKDAY_LABELS = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
 export default function RevisoesPage() {
   const reviewStates = useFlashcardReviews();
   const [index, setIndex] = useState(0);
+  const [finished, setFinished] = useState(false);
 
   const dueIds = useMemo(
     () => getDueFlashcardIds(allFlashcards, reviewStates),
@@ -22,7 +23,16 @@ export default function RevisoesPage() {
   const currentFlashcard = dueFlashcards[index];
 
   function handleReviewed() {
-    setIndex((i) => Math.min(dueFlashcards.length - 1, i + 1));
+    if (index >= dueFlashcards.length - 1) {
+      setFinished(true);
+      return;
+    }
+    setIndex((i) => i + 1);
+  }
+
+  function handleRestartDeck() {
+    setIndex(0);
+    setFinished(false);
   }
 
   return (
@@ -40,10 +50,23 @@ export default function RevisoesPage() {
               Ainda não há flashcards cadastrados — assim que houver, as
               revisões pendentes aparecerão aqui automaticamente.
             </p>
-          ) : dueFlashcards.length === 0 ? (
+          ) : dueFlashcards.length === 0 || !currentFlashcard ? (
             <p className="text-sm text-ink-muted">
               Nenhuma revisão pendente por agora. Bom trabalho.
             </p>
+          ) : finished ? (
+            <div className="rounded border border-line bg-paper p-6 text-center">
+              <p className="font-medium text-teal">Você revisou todos os cartões desta rodada.</p>
+              <p className="mt-1 text-sm text-ink-muted">
+                Os cartões marcados como “Não sabia” voltam para revisão amanhã.
+              </p>
+              <button
+                onClick={handleRestartDeck}
+                className="mt-4 rounded bg-teal px-4 py-2 text-sm font-medium text-paper hover:bg-teal-dark"
+              >
+                Recomeçar
+              </button>
+            </div>
           ) : (
             <>
               <p className="mb-3 font-mono text-sm text-ink-muted">

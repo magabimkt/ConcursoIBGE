@@ -23,15 +23,16 @@ export default function DashboardPage() {
 
         <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
           <StatCard label="Dias até a prova" value={stats.daysRemaining} accent="brick" />
-          <StatCard label="Progresso geral" value={`${stats.overallPercent}%`} />
-          <StatCard label="Horas estudadas" value={stats.hoursStudied} />
-          <StatCard label="Questões resolvidas" value={stats.questionsAnswered} />
+          <StatCard label="Progresso geral" value={`${stats.overallPercent}%`} href="/disciplinas" />
+          <StatCard label="Horas estudadas" value={stats.hoursStudied} href="/estatisticas" />
+          <StatCard label="Questões resolvidas" value={stats.questionsAnswered} href="/questoes" />
           <StatCard
             label="Percentual de acerto"
             value={`${stats.correctPercent}%`}
             accent="ochre"
+            href="/estatisticas"
           />
-          <StatCard label="Sequência de estudos" value={`${stats.streakDays} dias`} accent="ochre" />
+          <StatCard label="Sequência de estudos" value={`${stats.streakDays} dias`} accent="ochre" href="/revisoes" />
         </div>
 
         <div className="mt-6">

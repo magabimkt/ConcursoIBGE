@@ -10,6 +10,7 @@ import { filterFlashcards, type FlashcardFilters } from "@/lib/flashcards";
 export default function FlashcardsPage() {
   const [filters, setFilters] = useState<FlashcardFilters>({});
   const [index, setIndex] = useState(0);
+  const [finished, setFinished] = useState(false);
 
   const filtered = useMemo(() => filterFlashcards(allFlashcards, filters), [filters]);
   const currentFlashcard = filtered[index];
@@ -17,10 +18,20 @@ export default function FlashcardsPage() {
   function handleFiltersChange(next: FlashcardFilters) {
     setFilters(next);
     setIndex(0);
+    setFinished(false);
   }
 
   function handleReviewed() {
-    setIndex((i) => Math.min(filtered.length - 1, i + 1));
+    if (index >= filtered.length - 1) {
+      setFinished(true);
+      return;
+    }
+    setIndex((i) => i + 1);
+  }
+
+  function handleRestartDeck() {
+    setIndex(0);
+    setFinished(false);
   }
 
   return (
@@ -43,10 +54,23 @@ export default function FlashcardsPage() {
               (com repetição espaçada) já está pronta — os cartões
               aparecerão aqui assim que forem adicionados.
             </p>
-          ) : filtered.length === 0 ? (
+          ) : filtered.length === 0 || !currentFlashcard ? (
             <p className="text-sm text-ink-muted">
               Nenhum flashcard encontrado para os filtros selecionados.
             </p>
+          ) : finished ? (
+            <div className="rounded border border-line bg-paper p-6 text-center">
+              <p className="font-medium text-teal">Você revisou todos os cartões desta rodada.</p>
+              <p className="mt-1 text-sm text-ink-muted">
+                Os cartões marcados como “Não sabia” voltam para revisão amanhã.
+              </p>
+              <button
+                onClick={handleRestartDeck}
+                className="mt-4 rounded bg-teal px-4 py-2 text-sm font-medium text-paper hover:bg-teal-dark"
+              >
+                Recomeçar
+              </button>
+            </div>
           ) : (
             <>
               <div className="mb-3 flex items-center justify-between">

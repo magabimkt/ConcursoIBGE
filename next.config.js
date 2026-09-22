@@ -21,7 +21,8 @@ const withPWA = require("next-pwa")({
     },
     {
       urlPattern: /^https?.*\/(aulas|disciplinas)\/.*$/,
-      handler: "CacheFirst",
+      // NetworkFirst: busca a versão mais nova quando há internet; usa a cópia salva offline.
+      handler: "NetworkFirst",
       options: {
         cacheName: "lessons-cache",
         expiration: {
@@ -50,6 +51,8 @@ const nextConfig = {
   pageExtensions: ["ts", "tsx", "mdx"],
   reactStrictMode: true,
   output: "export",
+  // Gera cada página como pasta/index.html: mais confiável no GitHub Pages ao recarregar.
+  trailingSlash: true,
   // Nome do repositório no GitHub — necessário porque o GitHub Pages publica
   // projetos em usuario.github.io/nome-do-repositorio (não na raiz).
   // Ajuste para o nome real do seu repositório antes do primeiro deploy.

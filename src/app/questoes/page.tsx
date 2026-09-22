@@ -39,7 +39,7 @@ export default function QuestoesPage() {
               filtros e prática já está pronta — as questões aparecerão aqui
               assim que forem adicionadas.
             </p>
-          ) : filtered.length === 0 ? (
+          ) : filtered.length === 0 || !currentQuestion ? (
             <p className="text-sm text-ink-muted">
               Nenhuma questão encontrada para os filtros selecionados.
             </p>

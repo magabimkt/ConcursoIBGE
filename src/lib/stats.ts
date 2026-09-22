@@ -27,6 +27,19 @@ export function getDaysRemaining(now: Date = new Date()): number {
   return Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
 }
 
+/** A sequência só vale se o último estudo foi hoje ou ontem. */
+function currentStreak(progress: UserProgress): number {
+  if (!progress.lastStudyDate) return 0;
+  const toKey = (d: Date) =>
+    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const isActive =
+    progress.lastStudyDate === toKey(today) || progress.lastStudyDate === toKey(yesterday);
+  return isActive ? progress.streakDays : 0;
+}
+
 function percent(part: number, total: number): number {
   if (total === 0) return 0;
   return Math.round((part / total) * 100);
@@ -73,7 +86,7 @@ export function computeDashboardStats(
     hoursStudied: Math.round((totalMinutes / 60) * 10) / 10,
     questionsAnswered: progress.questionAttempts.length,
     correctPercent: percent(correctAnswers, progress.questionAttempts.length),
-    streakDays: progress.streakDays,
+    streakDays: currentStreak(progress),
   };
 }
 
